@@ -76,7 +76,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-
     transition: "background 0.2s",
     marginLeft: "16px",
   };
@@ -93,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     alignItems: "center",
     justifyContent: isCollapsed ? "center" : "flex-start",
     gap: "16px",
-    background: currentPage === "history" ? COLORS.primary.p03 : "transparent",
+    background: "transparent",
     border: "none",
     cursor: "pointer",
     fontSize: "18px",
@@ -102,6 +101,12 @@ const Sidebar: React.FC<SidebarProps> = ({
     textAlign: "left",
     transition: "background 0.2s",
   };
+
+  // Function to get the style for a navigation item based on whether it is the current page
+  const getNavItemStyle = (page: string): React.CSSProperties => ({
+    ...navItemStyle,
+    background: currentPage === page ? COLORS.primary.p03 : "transparent",
+  });
 
   const navTextStyle: React.CSSProperties = {
     display: isCollapsed ? "none" : "inline",
@@ -139,8 +144,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       <nav style={navStyle}>
+        {/* History Nav */}
         <button
-          style={navItemStyle}
+          style={getNavItemStyle("history")}
           onClick={() => onNavigate?.("history")}
           onMouseEnter={(e) => {
             if (currentPage !== "history") {
@@ -167,6 +173,36 @@ const Sidebar: React.FC<SidebarProps> = ({
             <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
           <span style={navTextStyle}>History</span>
+        </button>
+
+        {/* Categories Nav */}
+        <button
+          style={getNavItemStyle("categories")}
+          onClick={() => onNavigate?.("categories")}
+          onMouseEnter={(e) => {
+            if (currentPage !== "categories") {
+              e.currentTarget.style.background = COLORS.primary.p02;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (currentPage !== "categories") {
+              e.currentTarget.style.background = "transparent";
+            }
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <circle cx="12" cy="6" r="2" />
+            <circle cx="12" cy="12" r="2" />
+            <circle cx="12" cy="18" r="2" />
+          </svg>
+          <span style={navTextStyle}>Categories</span>
         </button>
       </nav>
     </aside>
