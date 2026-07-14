@@ -42,3 +42,19 @@ export interface DayExpenses {
   expenses: Expense[];
   total: number;
 }
+/**
+ * Type definitions for the Category entity
+ */
+export interface Category {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Type definition for the CategoryFormData used in creating or updating a category
+ */
+export interface CategoryFormData {
+  name: string;
+}
