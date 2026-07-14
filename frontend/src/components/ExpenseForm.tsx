@@ -44,6 +44,11 @@ export function ExpenseForm({
     label: category,
   }));
 
+  // Get today's date in YYYY-MM-DD format for the date input's max attribute
+  // "en-CA" locale gives us the format we want (YYYY-MM-DD), which is compatible with the date input type.
+  // don't use new Date().toISOString().split('T')[0] because it gives UTC date, which may be off by one day depending on the timezone.
+  const todayLocal = new Date().toLocaleDateString("en-CA");
+
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
       <TextField
@@ -79,14 +84,16 @@ export function ExpenseForm({
         required
       />
 
+
       <TextField
-        label="Date"
-        type="date"
-        value={formData.date}
-        onChange={(e) => handleChange("date", e.target.value)}
-        error={errors.date}
-        fullWidth
-        required
+          label="Date"
+          type="date"
+          value={formData.date || todayLocal} // default to today
+          onChange={(e) => handleChange("date", e.target.value)}
+          error={errors.date}
+          fullWidth
+          required
+          max={todayLocal}
       />
 
       <div style={buttonGroupStyle}>
